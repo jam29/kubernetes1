@@ -1,0 +1,36 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: asso1
+spec:
+  selector:
+    matchLabels:
+      app: asso1
+  template:
+    metadata:
+      labels:
+        app: asso1
+    spec:
+      containers:
+      - name: asso1
+        image: openlab29/asso1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: asso1
+spec:
+  selector:
+    app: asso1
+  ports:
+  - port: 3333
+    targetPort: 3000
+  type: "LoadBalancer"
